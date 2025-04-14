@@ -6,7 +6,7 @@ This is a 2D top-down shooting game made with Raylib where the player (a blue ci
 
 ## Demo
 
-![Image](https://github.com/user-attachments/assets/c01ad43c-61d4-41d3-adbf-51336488b824)
+![Image]([https://github.com/user-attachments/assets/c01ad43c-61d4-41d3-adbf-51336488b824](https://github.com/user-attachments/assets/36597af9-1e33-43bb-9adb-773ab3a681db))
 ## Features
 
 - Wall collision for both the player and enemies.
