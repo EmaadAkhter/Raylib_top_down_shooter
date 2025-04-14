@@ -2,11 +2,11 @@
 #include <math.h>
 #include <stdio.h>
 
-#define WALL_THICKNESS 20
+#define WALL_THICKNESS 35
 #define MAX_BULLETS 10
 #define MAX_ENEMIES 30
 #define screenWidth 772
-#define screenHeight 767
+#define screenHeight 700
 
 typedef struct Bullet {
     int x, y;
@@ -20,7 +20,7 @@ typedef struct Enemy {
     float speed;
     bool alive;
 } Enemy;
-
+Color transparentWhite = (Color){255, 255, 255, 0};
 // Line segment intersection for bullet-wall collision
 bool CheckLineIntersection(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
     float denom = (float)((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
@@ -63,13 +63,13 @@ void DrawWalls(int walls[][4], int wallCount) {
     for (int i = 0; i < wallCount; i++) {
         Vector2 start = { (float)walls[i][0], (float)walls[i][1] };
         Vector2 end = { (float)walls[i][2], (float)walls[i][3] };
-        DrawLineEx(start, end, WALL_THICKNESS, DARKPURPLE);
+        DrawLineEx(start, end, WALL_THICKNESS, transparentWhite);
     }
 }
 
 void ResetGame(int *playerX, int *playerY, Bullet bullets[], Enemy enemies[], int *enemyCount, int *score, int *kills, int *lives, bool *gameOver) {
     *playerX = screenWidth / 2;
-    *playerY = screenHeight / 2;
+    *playerY = screenHeight / 1.9;
     *enemyCount = 0;
     *score = 0;
     *kills = 0;
@@ -98,9 +98,28 @@ int main(void) {
     int kills = 0;
     int lives = 3;
     bool gameOver = false;
+    Image player_image = LoadImage("Soldier-Idle.png");
+    ImageResize(&player_image, 165, 165);
+    Texture2D player_texture = LoadTextureFromImage(player_image);
+    UnloadImage(player_image);
+
+    Image emeny_image = LoadImage("Orc-Idle.png");
+    ImageResize(&emeny_image, 175, 175);
+    Texture2D emeny_texture = LoadTextureFromImage(emeny_image);
+    UnloadImage(emeny_image);
+
+    Image bullet_image = LoadImage("bullet.png");
+    ImageResize(&bullet_image, 180,80);
+    Texture2D bullet_texture = LoadTextureFromImage(bullet_image);
+    UnloadImage(bullet_image);
+
+    Image background_image = LoadImage("back.png");
+    ImageResize(&background_image, 772,700);
+    Texture2D background_texture = LoadTextureFromImage(background_image);
+    UnloadImage(background_image);
 
     int playerX = screenWidth / 2;
-    int playerY = screenHeight / 2;
+    int playerY = screenHeight / 1.9;
 
     Bullet bullets[MAX_BULLETS] = { 0 };
 
@@ -116,6 +135,7 @@ int main(void) {
         {390, 310, 390, 340}, {380, 310, 390, 310}, {380, 340, 390, 340}
     };
     int wallCount = sizeof(walls) / sizeof(walls[0]);
+    
 
     while (!WindowShouldClose()) {
         if (!gameOver) {
@@ -235,18 +255,23 @@ int main(void) {
 
         BeginDrawing();
         ClearBackground(BLACK);
+        DrawTexture(background_texture,0 ,0, WHITE);
 
         DrawWalls(walls, wallCount);
 
         for (int i = 0; i < MAX_BULLETS; i++) {
-            if (bullets[i].active) DrawCircle(bullets[i].x, bullets[i].y, 5, DARKBROWN);
+            if (bullets[i].active) {DrawCircle(bullets[i].x, bullets[i].y, 5, transparentWhite);
+                DrawTexture(bullet_texture,bullets[i].x-100, bullets[i].y-40, WHITE);}
         }
 
         for (int i = 0; i < enemyCount; i++) {
-            if (enemies[i].alive) DrawCircle(enemies[i].x, enemies[i].y, 20, DARKGREEN);
+            if (enemies[i].alive) 
+            {DrawCircle(enemies[i].x, enemies[i].y, 20, transparentWhite);
+                DrawTexture(emeny_texture,enemies[i].x-100, enemies[i].y-86, WHITE);}
         }
 
-        DrawCircle(playerX, playerY, 15, DARKBLUE);
+        DrawCircle(playerX, playerY, 20, transparentWhite);
+        DrawTexture(player_texture, playerX-86, playerY-79, WHITE);
 
         DrawText(TextFormat("Score: %d", score), 10, 10, 20, RAYWHITE);
         DrawText(TextFormat("Kills: %d", kills), 10, 40, 20, RED);
@@ -254,7 +279,7 @@ int main(void) {
 
         if (gameOver) {
             DrawText("GAME OVER!", screenWidth / 2 - 100, screenHeight / 2, 40, RED);
-            DrawText("Press R to Restart", screenWidth / 2 - 100, screenHeight / 2 + 40, 20, DARKGRAY);
+            DrawText("Press R to Restart", screenWidth / 2 - 100, screenHeight / 2 + 40, 20, BLACK);
             if (IsKeyPressed(KEY_R)) {
                 ResetGame(&playerX, &playerY, bullets, enemies, &enemyCount, &score, &kills, &lives, &gameOver);
             }
