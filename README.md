@@ -26,4 +26,7 @@ This is a 2D top-down shooting game made with Raylib where the player (a blue ci
 ## Acknowledgements
 
  - [Raylib](https://www.raylib.com/index.html)
+  ## Assets
+ - [Floors & Walls](https://pixel-poem.itch.io/dungeon-assetpuck)
+ - [Character Models](https://zerie.itch.io/tiny-rpg-character-asset-pack?download#google_vignette)
  
