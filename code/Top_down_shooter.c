@@ -86,7 +86,7 @@ void ResetGame(int *playerX, int *playerY, Bullet bullets[], Enemy enemies[], in
 }
 
 int main(void) {
-    InitWindow(screenWidth, screenHeight, "Raylib Game");
+    InitWindow(screenWidth, screenHeight, "TOP DOWN SHOOTER");
     SetTargetFPS(60);
 
     float timer = 0.0f;
@@ -98,22 +98,22 @@ int main(void) {
     int kills = 0;
     int lives = 3;
     bool gameOver = false;
-    Image player_image = LoadImage("Soldier-Idle.png");
+    Image player_image = LoadImage("assets/Soldier-Idle.png");
     ImageResize(&player_image, 165, 165);
     Texture2D player_texture = LoadTextureFromImage(player_image);
     UnloadImage(player_image);
 
-    Image emeny_image = LoadImage("Orc-Idle.png");
+    Image emeny_image = LoadImage("assets/Orc-Idle.png");
     ImageResize(&emeny_image, 175, 175);
     Texture2D emeny_texture = LoadTextureFromImage(emeny_image);
     UnloadImage(emeny_image);
 
-    Image bullet_image = LoadImage("bullet.png");
+    Image bullet_image = LoadImage("assets/bullet.png");
     ImageResize(&bullet_image, 180,80);
     Texture2D bullet_texture = LoadTextureFromImage(bullet_image);
     UnloadImage(bullet_image);
 
-    Image background_image = LoadImage("back.png");
+    Image background_image = LoadImage("assets/back.png");
     ImageResize(&background_image, 772,700);
     Texture2D background_texture = LoadTextureFromImage(background_image);
     UnloadImage(background_image);
@@ -291,4 +291,3 @@ int main(void) {
     CloseWindow();
     return 0;
 }
-
